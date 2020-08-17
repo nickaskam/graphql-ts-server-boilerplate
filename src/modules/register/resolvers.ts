@@ -4,10 +4,15 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { GQL } from "../../types/schema";
 import { User } from "../../entity/User";
 import { formatYupError } from "../../utils/formatYupError";
+import {
+  duplicateEmail,
+  emailNotLongEnough,
+  passwordNotLongEnough,
+} from "./errorMessages";
 
 const schema = yup.object().shape({
-  email: yup.string().min(3).max(255).email(),
-  password: yup.string().min(3).max(255),
+  email: yup.string().min(3, emailNotLongEnough).max(255).email(),
+  password: yup.string().min(3, passwordNotLongEnough).max(255),
 });
 
 export const resolvers: ResolverMap = {
@@ -29,7 +34,7 @@ export const resolvers: ResolverMap = {
         return [
           {
             path: "email",
-            message: "already taken",
+            message: duplicateEmail,
           },
         ];
       }
