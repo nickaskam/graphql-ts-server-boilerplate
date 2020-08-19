@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { Redis } from "ioredis";
 
 export const createConfirmEmailLink = async (
-  url: string,
+  url: String,
   userId: string,
   redis: Redis
 ) => {
