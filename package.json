@@ -38,7 +38,7 @@
     "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
   },
   "jest": {
-    "globalSetup": "",
+    "globalSetup": "./src/testSetup/callSetup.js",
     "transform": {
       "^.+\\.tsk?$": "ts-jest"
     },
