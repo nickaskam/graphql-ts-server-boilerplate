@@ -1,5 +1,7 @@
 import * as bcypt from "bcryptjs";
 import * as yup from "yup";
+import { v4 } from "uuid";
+
 import { ResolverMap } from "../../types/graphql-utils";
 import { GQL } from "../../types/schema";
 import { User } from "../../entity/User";
@@ -10,6 +12,7 @@ import {
   passwordNotLongEnough,
 } from "./errorMessages";
 import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
+import { sendEmail } from "../../utils/sendEmail";
 
 const schema = yup.object().shape({
   email: yup.string().min(3, emailNotLongEnough).max(255).email(),
@@ -45,13 +48,19 @@ export const resolvers: ResolverMap = {
       }
       const hashedPassword = await bcypt.hash(password, 10);
       const user = User.create({
+        id: v4(),
         email,
         password: hashedPassword,
       });
 
       await user.save();
 
-      await createConfirmEmailLink(url, user.id, redis);
+      if (process.env.NODE_ENV !== "test") {
+        await sendEmail(
+          email,
+          await createConfirmEmailLink(url, user.id, redis)
+        );
+      }
 
       return null;
     },
