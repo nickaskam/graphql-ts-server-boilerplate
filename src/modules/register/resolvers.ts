@@ -9,12 +9,13 @@ import {
   duplicateEmail,
   emailNotLongEnough,
   passwordNotLongEnough,
+  invalidEmail,
 } from "./errorMessages";
 // import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 // import { sendEmail } from "../../utils/sendEmail";
 
 const schema = yup.object().shape({
-  email: yup.string().min(3, emailNotLongEnough).max(255).email(),
+  email: yup.string().min(3, emailNotLongEnough).max(255).email(invalidEmail),
   password: yup.string().min(3, passwordNotLongEnough).max(255),
 });
 
@@ -32,6 +33,7 @@ export const resolvers: ResolverMap = {
       }
 
       const { email, password } = args;
+
       const userAlreadyExists = await User.findOne({
         where: { email },
         select: ["id"],

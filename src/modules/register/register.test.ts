@@ -1,5 +1,4 @@
 import { request } from "graphql-request";
-
 import { User } from "../../entity/User";
 import {
   duplicateEmail,
