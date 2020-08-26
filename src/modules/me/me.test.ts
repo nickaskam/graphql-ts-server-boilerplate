@@ -3,17 +3,19 @@ import { Connection } from "typeorm";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { User } from "../../entity/User";
 
+let userId: string;
 let conn: Connection;
 const email = "bob5@bob.com";
 const password = "jlkajoioiqwe";
 
 beforeAll(async () => {
   conn = await createTypeormConn();
-  await User.create({
+  const user = await User.create({
     email,
     password,
     confirmed: true,
   }).save();
+  userId = user.id;
 });
 
 afterAll(async () => {
@@ -65,5 +67,11 @@ describe("me", () => {
     );
 
     console.log(response.data.data);
+    expect(response.data.data).toEqual({
+      me: {
+        id: userId,
+        email,
+      },
+    });
   });
 });
