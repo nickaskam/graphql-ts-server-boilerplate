@@ -40,15 +40,14 @@ const meQuery = `
 }
 `;
 
-describe("me", () => {
-  test("return null if no cookie", async () => {
-    const response = await axios.post(process.env.TEST_HOST as string, {
-      query: meQuery,
-    });
-    expect(response.data.data.me).toBeNull();
-  });
+const logoutMutation = `
+mutation {
+  logout
+}
+`;
 
-  test("get current user", async () => {
+describe("logout", () => {
+  test("test logging out a user", async () => {
     await axios.post(
       process.env.TEST_HOST as string,
       {
@@ -76,5 +75,27 @@ describe("me", () => {
         email,
       },
     });
+
+    await axios.post(
+      process.env.TEST_HOST as string,
+      {
+        query: logoutMutation,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    const response2 = await axios.post(
+      process.env.TEST_HOST as string,
+      {
+        query: meQuery,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    expect(response2.data.data.me).toBeNull();
   });
 });
