@@ -1,4 +1,6 @@
 import { Connection } from "typeorm";
+import * as faker from "faker";
+
 import { createTypeormConn } from "../../utils/createTypeormConn";
 import { User } from "../../entity/User";
 import { TestClient } from "../../utils/testClient";
@@ -12,9 +14,9 @@ import { expiredKeyError } from "./errorMessages";
 let userId: string;
 let conn: Connection;
 const redis = new Redis();
-const email = "bob5@bob.com";
-const password = "jlkajoioiqwe";
-const newPassword = "qwepoiruqwjakla";
+const email = faker.internet.email();
+const password = faker.internet.password();
+const newPassword = faker.internet.password();
 
 beforeAll(async () => {
   conn = await createTypeormConn();

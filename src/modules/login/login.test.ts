@@ -1,11 +1,13 @@
+import { Connection } from "typeorm";
+import * as faker from "faker";
+
 import { invalidLogin, confirmEmailError } from "./errorMessages";
 import { User } from "../../entity/User";
 import { createTypeormConn } from "../../utils/createTypeormConn";
-import { Connection } from "typeorm";
 import { TestClient } from "../../utils/testClient";
 
-const email = "tom@bob.com";
-const password = "asdfasdf";
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 let conn: Connection;
 
