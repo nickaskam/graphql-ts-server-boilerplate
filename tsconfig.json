@@ -6,6 +6,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*", "src/types/*"]
+    },
 
     "removeComments": true,
     "noImplicitAny": true,
