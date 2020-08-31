@@ -58,7 +58,7 @@
     "gen-schema-types": "ts-node src/scripts/createTypes.ts"
   },
   "jest": {
-    "globalSetup": "./src/testSetup/callSetup.js",
+    "globalSetup": "./src/testUtils/callSetup.js",
     "transform": {
       "^.+\\.tsk?$": "ts-jest"
     },
