@@ -1,6 +1,6 @@
-import { ResolverMap } from "../../types/graphql-utils";
-import { redis } from "../../redis";
-import { removeAllUsersSessions } from "../../utils/removeAllUsersSessions";
+import { ResolverMap } from "../../../types/graphql-utils";
+import { redis } from "../../../redis";
+import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
 
 export const resolvers: ResolverMap = {
   Mutation: {
