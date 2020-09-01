@@ -17,7 +17,7 @@ const RedisStore = connectRedis(session);
 
 export const startServer = async () => {
   const server = new GraphQLServer({
-    schema: genSchema(),
+    schema: genSchema() as any,
     context: ({ request }) => ({
       redis,
       url: request.protocol + "://" + request.get("host"),
